@@ -1,6 +1,8 @@
 Grails Kafka
 ============
 
+[![Circle CI](https://circleci.com/gh/charliek/grails-kafka/tree/master.svg?style=svg)](https://circleci.com/gh/charliek/grails-kafka/tree/master)
+
 Disclaimer
 ----------
 This is a very early plugin that should probably not be used by anybody. It is mostly

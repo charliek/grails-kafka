@@ -1,0 +1,19 @@
+machine:
+  java:
+    version:
+      oraclejdk7
+
+dependencies:
+  post:
+    - ./grailsw clean --non-interactive
+    - ./grailsw package --non-interactive
+
+  cache_directories:
+    - ~/.grails
+
+test:
+  override:
+    - ./grailsw test-app --non-interactive
+  post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - find . -type f -regex ".*/target/test-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
