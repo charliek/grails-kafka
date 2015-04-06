@@ -58,8 +58,8 @@ class MessageHandlerService implements MessageProcessor {
 	static transactional = false
 
 	@Override
-	void processMessage(byte[] bytes) throws Exception {
-		log.warn("Got a message from kafka!! - ${new String(bytes)}")
+	void processMessage(MessageAndMetadata<byte[], byte[]> message) throws Exception {
+		log.warn("Got a message from kafka!! - ${new String(message.message())}")
 	}
 }
 ```

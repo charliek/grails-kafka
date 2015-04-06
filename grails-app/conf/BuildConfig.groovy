@@ -25,13 +25,13 @@ grails.project.dependency.resolution = {
     }
     log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     repositories {
-		mavenLocal()
+//		mavenLocal()
 		grailsCentral()
         mavenCentral()
-        //mavenRepo "http://repository.codehaus.org"
+        mavenRepo "http://dl.bintray.com/content/charliek/maven"
     }
     dependencies {
-		compile('com.charlieknudsen:konsumer:0.0.1-SNAPSHOT') {
+		compile('com.charlieknudsen:konsumer:0.0.1') {
 			exclude(module:'log4j-over-slf4j')
 		}
     }
