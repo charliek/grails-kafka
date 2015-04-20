@@ -9,11 +9,11 @@ import org.codehaus.groovy.grails.commons.GrailsServiceClass
 @Log4j
 class ServiceWrapper {
 
-	private static final String KAFKA_TOPIC = "kafkaTopic"
+	private static final String KAFKA_CONSUMER = "kafkaConsumer"
 
 	private GrailsServiceClass service
 	private KafkaConfigHolder configHolder
-	String topic
+	String consumerName
 
 	ServiceWrapper(def service, KafkaConfigHolder configHolder) {
 		this.service = service
@@ -22,21 +22,25 @@ class ServiceWrapper {
 
 	boolean shouldProcess() {
 		// For now assuming this will be a string or gstring
-		log.info("looking for kafka topic on ${service}")
-		topic = GrailsClassUtils.getStaticPropertyValue(service.clazz, KAFKA_TOPIC)?.toString()
-		if (topic == null ) {
+		log.debug("looking for kafka consumer on ${service}")
+		consumerName = GrailsClassUtils.getStaticPropertyValue(service.clazz, KAFKA_CONSUMER)?.toString()
+		if (consumerName == null ) {
 			return false
 		}
-		log.info("Topic ${topic} found on ${service}")
+		log.info("Kafka consumer '${consumerName}' found on ${service}")
 		if (! service instanceof MessageProcessor) {
-			log.warn("Bean with topic named ${topic} does not extend MessageProcessor so skipping")
+			log.error("Bean with consumer named '${consumerName}' does not extend MessageProcessor so skipping")
 			return false
 		}
-		return configHolder.isTopicEnabled(topic)
+		return configHolder.isConsumerEnabled(consumerName)
 	}
 
 	ListenerConfig getConfig() {
-		return configHolder.getConfig(topic)
+		return configHolder.getConfig(consumerName)
+	}
+
+	String getTopicName() {
+		return configHolder.getTopicName(consumerName)
 	}
 
 	static String underscoreToCamelCase(String underscore) {
@@ -47,9 +51,9 @@ class ServiceWrapper {
 	}
 
 	String getSpringBeanName() {
-		String springTopicName = underscoreToCamelCase(topic.capitalize())
+		String springTopicName = underscoreToCamelCase(consumerName.capitalize())
 		String beanName = "kafkaListener${springTopicName}"
-		log.info("Creating kafka listener bean for topic ${topic} named: kafkaListener${springTopicName}")
+		log.info("Creating kafka listener bean for consumer ${consumerName} named: kafkaListener${springTopicName}")
 		return beanName
 	}
 

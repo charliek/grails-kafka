@@ -5,7 +5,7 @@ import com.charlieknudsen.konsumer.MessageProcessor
 
 class GrailsKafkaGrailsPlugin {
     // the plugin version
-    def version = "0.1-SNAPSHOT"
+    def version = "0.0.1-SNAPSHOT"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.3 > *"
     // resources that are excluded from plugin packaging
@@ -36,7 +36,7 @@ Plugin for setting up kafka consumers.
 		for(def service in application.serviceClasses) {
 			ServiceWrapper wrappedService = new ServiceWrapper(service, configHolder)
 			if (wrappedService.shouldProcess()) {
-				log.info("Setting up ${service} as a kafka message processor listening to ${wrappedService.topic}")
+				log.info("Setting up ${service} as kafka consumer '${wrappedService.consumerName}' listening to topic '${wrappedService.topicName}'")
 				"${wrappedService.springBeanName}"(WrappedKafkaListener, service.clazz, wrappedService.getConfig())
 			}
 		}

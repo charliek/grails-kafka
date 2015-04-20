@@ -2,6 +2,8 @@ grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 
+grails.release.scm.enabled = false
+
 grails.project.fork = [
     // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
     //  compile: [maxMemory: 256, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
@@ -31,14 +33,13 @@ grails.project.dependency.resolution = {
         mavenRepo "http://dl.bintray.com/content/charliek/maven"
     }
     dependencies {
-		compile('com.charlieknudsen:konsumer:0.0.2') {
+		compile('com.charlieknudsen:konsumer:0.0.3') {
             excludes([ group: 'org.slf4j', name: 'slf4j-log4j12'])
         }
     }
 
     plugins {
-		build(":release:3.0.1",
-				":rest-client-builder:1.0.3") {
+		build(":release:3.1.1", ":rest-client-builder:2.1.1") {
 			export = false
 		}
     }

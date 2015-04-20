@@ -12,15 +12,15 @@ class KafkaConfigHolder {
 		this.kafkaConfig = kafkaConfig
 	}
 
-	def getTopicConfig(String topicName) {
-		return kafkaConfig."$topicName"
+	def getConsumerConfig(String consumerName) {
+		return kafkaConfig.consumers."$consumerName"
 	}
 
-	boolean isTopicEnabled(String topicName) {
-		def topicConfig = getTopicConfig(topicName)
+	boolean isConsumerEnabled(String consumerName) {
+		def consumerConfig = getConsumerConfig(consumerName)
 		// For now enabled must be explicitly set and we default to false
-		boolean enabled =  topicConfig.enabled as boolean
-		log.info("Kafka topic ${topicName} enabled: ${enabled}")
+		boolean enabled =  consumerConfig.enabled as boolean
+		log.info("Kafka consumer '${consumerName}' enabled: ${enabled}")
 		return enabled
 	}
 
@@ -31,21 +31,30 @@ class KafkaConfigHolder {
 		}
 	}
 
-	ListenerConfig getConfig(String topicName) {
-		if (! isTopicEnabled(topicName)) {
+	String getTopicName(String consumerName) {
+		def consumerConfig = getConsumerConfig(consumerName)
+		return consumerConfig.topic ?: consumerName
+	}
+
+	ListenerConfig getConfig(String consumerName) {
+		if (! isConsumerEnabled(consumerName)) {
 			return null
 		}
+		def consumerConfig = getConsumerConfig(consumerName)
+		def topicName = getTopicName(consumerName)
+		log.info("Kafka consumer '${consumerName}' enabled and listening to topic '${topicName}'")
 		ListenerConfig.Builder builder = new ListenerConfig.Builder()
 				.topic(topicName)
-		def topicConfig = getTopicConfig(topicName)
-		ifset(builder.&partitionThreads, topicConfig.partitionThreads)
-		ifset(builder.&processingThreads, topicConfig.processingThreads)
-		ifset(builder.&processingQueueSize, topicConfig.processingQueueSize)
-		ifset(builder.&tryCount, topicConfig.tryCount)
-		ifset(builder.&consumerGroup, topicConfig.consumerGroup)
-		ifset(builder.&zookeeper, topicConfig.zookeeper)
-		ifset(builder.&consumerGroup, topicConfig.consumerGroup)
-		topicConfig.props.each { key, value ->
+
+		ifset(builder.&partitionThreads, consumerConfig.partitionThreads)
+		ifset(builder.&processingThreads, consumerConfig.processingThreads)
+		ifset(builder.&processingQueueSize, consumerConfig.processingQueueSize)
+		ifset(builder.&tryCount, consumerConfig.tryCount)
+		ifset(builder.&consumerGroup, consumerConfig.consumerGroup)
+		ifset(builder.&zookeeper, consumerConfig.zookeeper)
+		ifset(builder.&consumerGroup, consumerConfig.consumerGroup)
+
+		consumerConfig.props.each { key, value ->
 			builder.setProperty(key.toString().replace('_', '.'), value.toString())
 		}
 		ListenerConfig config = builder.build()

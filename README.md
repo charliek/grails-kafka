@@ -19,33 +19,37 @@ name to declare the queue to listen to.  Then in configuration you need to wire 
 up using something like:
 
 ```groovy
-kafka {
-	// The topic name should match the name in the service
-	topic_name {
-		// By default everything is disabled
-		enabled = true
-		// The zookeeper connection string
-		zookeeper = '127.0.0.1:2181'
-		// The number of partitions to listen to
-		partitionThreads = 1
-		// The number of worker threads to process incoming messages
-		processingThreads = 11
-		// The size of the in memory queue being processed by the processingThreads
-		processingQueueSize = 30
-		// The number of times to retry a message
-		tryCount = 2
-		// The consumer group name
-		consumerGroup 'demo-consumer-name'
-		props {
-			// Add any raw properties that you want passed when connecting
-			// See http://kafka.apache.org/08/configuration.html
-			auto_offset_reset = 'smallest'
+kafka { 
+	consumers {	
+		// The consumer_name must match the 'kafkaConsumer' value in the listening service
+		consumer_name {
+			// By default everything is disabled so you must specify this
+			enabled = true
+			// The topic to listen to. If the topic is unspecified the consumer name will be used.
+			topic = 'mytopic'
+			// The zookeeper connection string
+			zookeeper = '127.0.0.1:2181'
+			// The number of partitions to listen to
+			partitionThreads = 1
+			// The number of worker threads to process incoming messages
+			processingThreads = 11
+			// The size of the in memory queue being processed by the processingThreads
+			processingQueueSize = 30
+			// The number of times to retry a message
+			tryCount = 2
+			// The consumer group name
+			consumerGroup 'demo-consumer-name'
+			props {
+				// Add any raw properties that you want passed when connecting
+				// See http://kafka.apache.org/08/configuration.html
+				auto_offset_reset = 'smallest'
+			}
 		}
 	}
 }
 ```
 
-Then you need to create a service that looks something like:
+Then you need to create a grails service that looks something like:
 
 ```groovy
 package example.myapp
@@ -54,7 +58,7 @@ import com.charlieknudsen.konsumer.MessageProcessor
 
 class MessageHandlerService implements MessageProcessor {
 
-	static kafkaTopic = 'my_topic'
+	static kafkaConsumer = 'consumer_name'
 	static transactional = false
 
 	@Override
