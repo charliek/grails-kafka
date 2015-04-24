@@ -5,7 +5,7 @@ import com.charlieknudsen.konsumer.MessageProcessor
 
 class GrailsKafkaGrailsPlugin {
     // the plugin version
-    def version = "0.0.1-SNAPSHOT"
+    def version = "0.0.1"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.3 > *"
     // resources that are excluded from plugin packaging
@@ -22,7 +22,7 @@ Plugin for setting up kafka consumers.
 
     def documentation = "https://github.com/charliek/grails-kafka"
     def license = "APACHE"
-    def issueManagement = [ system: "github", url: "https://github.com/charliek/grails-grails-kafka/issues" ]
+    def issueManagement = [ system: "github", url: "https://github.com/charliek/grails-kafka/issues" ]
     def scm = [ url: "https://github.com/charliek/grails-kafka" ]
 
     def doWithWebDescriptor = { xml ->
