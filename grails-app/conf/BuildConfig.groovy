@@ -2,7 +2,10 @@ grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 
-grails.release.scm.enabled = false
+//grails.project.repos.fileRepo.url = "file:///Users/charliek/tmp"
+//grails.project.repos.fileRepo.type = "maven"
+//grails.project.repos.default = "fileRepo"
+//grails.release.scm.enabled = false
 
 grails.project.fork = [
     // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
@@ -33,7 +36,7 @@ grails.project.dependency.resolution = {
         mavenRepo "http://dl.bintray.com/content/charliek/maven"
     }
     dependencies {
-		compile('com.charlieknudsen:konsumer:0.0.3') {
+		compile('com.charlieknudsen:konsumer:0.0.4') {
             excludes([ group: 'org.slf4j', name: 'slf4j-log4j12'])
         }
     }
