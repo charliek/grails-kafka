@@ -14,7 +14,7 @@ Usage
 -----
 
 Currently this plugin allows you to listen to a kafka topic by creating a service that
-implements `com.charlieknudsen.konsumer.MessageProcessor` and uses the static `kafkaTopic`
+implements `smartthings.konsumer.MessageProcessor` and uses the static `kafkaConsumer`
 name to declare the queue to listen to.  Then in configuration you need to wire the topic
 up using something like:
 
@@ -54,7 +54,7 @@ Then you need to create a grails service that looks something like:
 ```groovy
 package example.myapp
 
-import com.charlieknudsen.konsumer.MessageProcessor
+import smartthings.konsumer.MessageProcessor
 
 class MessageHandlerService implements MessageProcessor {
 
