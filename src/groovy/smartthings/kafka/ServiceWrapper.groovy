@@ -1,10 +1,10 @@
-package com.charlieknudsen.kafka
+package smartthings.kafka
 
-import com.charlieknudsen.konsumer.ListenerConfig
-import com.charlieknudsen.konsumer.MessageProcessor
 import groovy.util.logging.Log4j
 import org.codehaus.groovy.grails.commons.GrailsClassUtils
 import org.codehaus.groovy.grails.commons.GrailsServiceClass
+import smartthings.konsumer.ListenerConfig
+import smartthings.konsumer.MessageProcessor
 
 @Log4j
 class ServiceWrapper {
@@ -24,11 +24,11 @@ class ServiceWrapper {
 		// For now assuming this will be a string or gstring
 		log.debug("looking for kafka consumer on ${service}")
 		consumerName = GrailsClassUtils.getStaticPropertyValue(service.clazz, KAFKA_CONSUMER)?.toString()
-		if (consumerName == null ) {
+		if (consumerName == null) {
 			return false
 		}
 		log.info("Kafka consumer '${consumerName}' found on ${service}")
-		if (! service instanceof MessageProcessor) {
+		if (!service instanceof MessageProcessor) {
 			log.error("Bean with consumer named '${consumerName}' does not extend MessageProcessor so skipping")
 			return false
 		}
@@ -44,10 +44,10 @@ class ServiceWrapper {
 	}
 
 	static String underscoreToCamelCase(String underscore) {
-		if(!underscore || underscore.isAllWhitespace()){
+		if (!underscore || underscore.isAllWhitespace()) {
 			return ''
 		}
-		return underscore.replaceAll(/_\w/){ it[1].toUpperCase() }
+		return underscore.replaceAll(/_\w/) { it[1].toUpperCase() }
 	}
 
 	String getSpringBeanName() {

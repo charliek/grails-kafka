@@ -20,5 +20,5 @@ log4j = {
            'net.sf.ehcache.hibernate'
 
 	info  'org.codehaus.groovy.grails.plugins' // plugins
-	debug 'com.charlieknudsen'
+	debug 'smartthings'
 }

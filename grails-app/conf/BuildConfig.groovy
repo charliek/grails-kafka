@@ -36,7 +36,7 @@ grails.project.dependency.resolution = {
         mavenRepo "http://dl.bintray.com/content/charliek/maven"
     }
     dependencies {
-		compile('com.charlieknudsen:konsumer:0.0.4') {
+		compile('smartthings:konsumer:0.0.5') {
             excludes([ group: 'org.slf4j', name: 'slf4j-log4j12'])
         }
     }

@@ -1,7 +1,7 @@
-package com.charlieknudsen.kafka
+package smartthings.kafka
 
-import com.charlieknudsen.konsumer.ListenerConfig
 import groovy.util.logging.Log4j
+import smartthings.konsumer.ListenerConfig
 
 @Log4j
 class KafkaConfigHolder {
@@ -19,14 +19,14 @@ class KafkaConfigHolder {
 	boolean isConsumerEnabled(String consumerName) {
 		def consumerConfig = getConsumerConfig(consumerName)
 		// For now enabled must be explicitly set and we default to false
-		boolean enabled =  consumerConfig.enabled as boolean
+		boolean enabled = consumerConfig.enabled as boolean
 		log.info("Kafka consumer '${consumerName}' enabled: ${enabled}")
 		return enabled
 	}
 
 	private void ifset(Closure c, def value) {
 		value = value ?: null
-		if ( value != null) {
+		if (value != null) {
 			c(value)
 		}
 	}
@@ -37,7 +37,7 @@ class KafkaConfigHolder {
 	}
 
 	ListenerConfig getConfig(String consumerName) {
-		if (! isConsumerEnabled(consumerName)) {
+		if (!isConsumerEnabled(consumerName)) {
 			return null
 		}
 		def consumerConfig = getConsumerConfig(consumerName)

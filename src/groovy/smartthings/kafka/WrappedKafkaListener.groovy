@@ -1,8 +1,8 @@
-package com.charlieknudsen.kafka
+package smartthings.kafka
 
-import com.charlieknudsen.konsumer.KafkaListener
-import com.charlieknudsen.konsumer.ListenerConfig
-import com.charlieknudsen.konsumer.MessageProcessor
+import smartthings.konsumer.KafkaListener
+import smartthings.konsumer.ListenerConfig
+import smartthings.konsumer.MessageProcessor
 
 class WrappedKafkaListener {
 

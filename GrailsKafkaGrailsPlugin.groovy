@@ -1,7 +1,7 @@
-import com.charlieknudsen.kafka.KafkaConfigHolder
-import com.charlieknudsen.kafka.ServiceWrapper
-import com.charlieknudsen.kafka.WrappedKafkaListener
-import com.charlieknudsen.konsumer.MessageProcessor
+import smartthings.kafka.KafkaConfigHolder
+import smartthings.kafka.ServiceWrapper
+import smartthings.kafka.WrappedKafkaListener
+import smartthings.konsumer.MessageProcessor
 
 class GrailsKafkaGrailsPlugin {
     // the plugin version
@@ -15,7 +15,7 @@ class GrailsKafkaGrailsPlugin {
 
     def title = "Grails Kafka Plugin"
     def author = "Charlie Knudsen"
-    def authorEmail = "charlie.knudsen@gmail.com"
+    def authorEmail = "charlie.knudsen@smartthings.com"
     def description = '''\
 Plugin for setting up kafka consumers.
 '''
