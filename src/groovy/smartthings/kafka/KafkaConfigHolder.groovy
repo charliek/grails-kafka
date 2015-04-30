@@ -44,6 +44,7 @@ class KafkaConfigHolder {
 		def topicName = getTopicName(consumerName)
 		log.info("Kafka consumer '${consumerName}' enabled and listening to topic '${topicName}'")
 		ListenerConfig.Builder builder = new ListenerConfig.Builder()
+				.daemonThreads(true) // default to daemonThreads to avoid hanging shutdown
 				.topic(topicName)
 
 		ifset(builder.&partitionThreads, consumerConfig.partitionThreads)
@@ -53,6 +54,8 @@ class KafkaConfigHolder {
 		ifset(builder.&consumerGroup, consumerConfig.consumerGroup)
 		ifset(builder.&zookeeper, consumerConfig.zookeeper)
 		ifset(builder.&consumerGroup, consumerConfig.consumerGroup)
+		ifset(builder.&daemonThreads, consumerConfig.daemonThreads)
+		ifset(builder.&shutdownAwaitSeconds, consumerConfig.shutdownAwaitSeconds)
 
 		consumerConfig.props.each { key, value ->
 			builder.setProperty(key.toString().replace('_', '.'), value.toString())
