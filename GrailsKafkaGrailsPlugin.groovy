@@ -5,7 +5,7 @@ import smartthings.konsumer.MessageProcessor
 
 class GrailsKafkaGrailsPlugin {
     // the plugin version
-    def version = "0.0.2"
+    def version = "0.0.3-SNAPSHOT"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.3 > *"
     // resources that are excluded from plugin packaging
