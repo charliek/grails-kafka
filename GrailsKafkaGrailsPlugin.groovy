@@ -68,7 +68,7 @@ Plugin for setting up kafka consumers.
 
     def onShutdown = { event ->
         // Code that is executed when the application shuts down
-		Map<String, WrappedKafkaListener> listenerBeans = ctx.getBeansOfType(WrappedKafkaListener)
+		Map<String, WrappedKafkaListener> listenerBeans = event.ctx.getBeansOfType(WrappedKafkaListener)
 		listenerBeans.each { k, v ->
 			log.info("Shutting down listener for bean ${k}")
 			v.shutdown()
